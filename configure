@@ -1,0 +1,71 @@
+#! /bin/bash
+
+config_file=./burnimg.conf
+AWK=gawk
+SED=sed
+GUI_TOOL=dialog
+ADB=adb
+FASTBOOT=fastboot
+
+usage()
+{
+        echo usage:
+        echo -e "\tSet the default image directory"
+        echo -e "\t./configure -d ~/work/image/"
+}
+
+while getopts d:h opt
+do
+        case "$opt" in
+                d)
+                        Dir=$OPTARG;;
+                h)
+                        usage
+
+                        exit 1;;
+                *)
+                        exit 0;;
+        esac
+done
+
+which $ADB
+if (( $? != 0 ))
+then
+        echo "I need $ADB"
+
+        exit 1
+fi
+
+which $FASTBOOT
+if (( $? != 0 ))
+then
+        echo "I need $FASTBOOT"
+
+        exit 1
+fi
+
+which $AWK
+if (( $? != 0 ))
+then
+        sudo apt-get install $AWK
+fi
+
+which $GUI_TOOL
+if (( $? != 0 ))
+then
+        sudo apt-get install $GUI_TOOL
+fi
+
+which $SED
+if (( $? != 0 ))
+then
+        sudo apt-get install $SED
+fi
+
+if [ -n $Dir ]
+then
+        sed -i '/image_dir.*/d' $config_file
+        echo "image_dir:$Dir" >> $config_file
+fi
+
+exit 0
