@@ -1,6 +1,6 @@
 #! /bin/bash
 
-config_file=./burnimg.conf
+CONFIG_FILE=./burnimg.conf
 AWK=gawk
 SED=sed
 GUI_TOOL=dialog
@@ -12,6 +12,11 @@ usage()
         echo usage:
         echo -e "\tSet the default image directory"
         echo -e "\t./configure -d ~/work/image/"
+}
+
+install_tools()
+{
+	sudo apt-get install $DEBS
 }
 
 while getopts d:h opt
@@ -47,25 +52,36 @@ fi
 which $AWK
 if (( $? != 0 ))
 then
-        sudo apt-get install $AWK
+	DEBS=" $AWK"
 fi
 
 which $GUI_TOOL
 if (( $? != 0 ))
 then
-        sudo apt-get install $GUI_TOOL
+	DEBS+=" $GUI_TOOL"
 fi
 
 which $SED
 if (( $? != 0 ))
 then
-        sudo apt-get install $SED
+	DEBS+=" $SED"
+fi
+
+if [ -n "$DEBS" ]
+then
+	read -n1 -p "Do you want to install $DEBS [Y/N]?" answer
+	case $answer in
+	        y | Y)
+			install_tools;;
+	        n | N)
+	                echo;;
+	esac
 fi
 
 if [ -n $Dir ]
 then
-        sed -i '/image_dir.*/d' $config_file
-        echo "image_dir:$Dir" >> $config_file
+        sed -i '/image_dir.*/d' $CONFIG_FILE
+        echo "image_dir:$Dir" >> $CONFIG_FILE
 fi
 
 exit 0

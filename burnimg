@@ -2,10 +2,11 @@
 
 #Author: Lynn
 #Email: shuai.zhong@sim.com
-#Version 3.0
 
 config_file="/etc/burnimg/burnimg.conf"
 help="/usr/share/burnimg/help"
+version="3.1"
+
 declare -A image
 
 usage()
@@ -15,7 +16,7 @@ usage()
 
 version()
 {
-        dialog --title "Version" --infobox "burnimg tools 3.0" 3 25
+        dialog --title "Version" --infobox "burnimg tools $version" 3 25
 }
 
 while getopts hvdp:P: opt
