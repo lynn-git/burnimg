@@ -1,0 +1,7 @@
+-p, The path to the image file
+-d, Enable debug information
+-h, Display this help and exit
+-v, Display version information and exit
+
+If you find any bug
+Please report to sotii@163.com

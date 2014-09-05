@@ -1,0 +1,12 @@
+The simplest way to install Burnimg tools is:
+
+1. `cd' to the directory containing the Burnimg's source
+        code and type `./configure' to configure the tools
+        for your system.(./configure -h to know more )
+
+2. Type `make' or `make install' to install Burnimg tools.
+
+3. Often, you can also type `make uninstall' to remove the
+        installed files again.
+
+4. Type 'make clean' to reset the config.
